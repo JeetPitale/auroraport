@@ -80,6 +80,25 @@ interface JobData {
   steps: Step[];
 }
 
+const getApiBaseUrl = () => {
+  if (typeof window !== "undefined") {
+    const envUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (envUrl) return envUrl;
+    return `http://${window.location.hostname}:8000`;
+  }
+  return "http://localhost:8000";
+};
+
+const getWsBaseUrl = () => {
+  if (typeof window !== "undefined") {
+    const envUrl = process.env.NEXT_PUBLIC_WS_URL;
+    if (envUrl) return envUrl;
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    return `${protocol}://${window.location.hostname}:8000`;
+  }
+  return "ws://localhost:8000";
+};
+
 export default function Dashboard() {
   // State
   const [file, setFile] = useState<File | null>(null);
@@ -110,7 +129,7 @@ export default function Dashboard() {
     if (!jobId) return;
 
     // Connect to WebSocket
-    const wsUrl = `ws://${window.location.hostname}:8000/api/ws/${jobId}`;
+    const wsUrl = `${getWsBaseUrl()}/api/ws/${jobId}`;
     console.log(`Connecting to WebSocket: ${wsUrl}`);
     const socket = new WebSocket(wsUrl);
     ws.current = socket;
@@ -163,7 +182,7 @@ export default function Dashboard() {
   // Fetch generated files
   const fetchJobFiles = async (id: string) => {
     try {
-      const res = await fetch(`http://${window.location.hostname}:8000/api/job/${id}/files`);
+      const res = await fetch(`${getApiBaseUrl()}/api/job/${id}/files`);
       if (res.ok) {
         const data = await res.json();
         setSourceFiles(data);
@@ -202,7 +221,7 @@ export default function Dashboard() {
     formData.append("file", file);
 
     try {
-      const res = await fetch(`http://${window.location.hostname}:8000/api/upload`, {
+      const res = await fetch(`${getApiBaseUrl()}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -307,7 +326,7 @@ export default function Dashboard() {
           <div className="p-4 border-t border-slate-800/80 mt-4">
             <div className="text-[11px] text-slate-500 font-semibold px-3 py-1 uppercase tracking-widest mb-2">Deliverables</div>
             <a 
-              href={`http://localhost:8000/api/download/${job?.zip_filename || 'fitlife_tracker_ios_migration.zip'}`}
+              href={`${getApiBaseUrl()}/api/download/${job?.zip_filename || 'fitlife_tracker_ios_migration.zip'}`}
               className="w-full flex items-center justify-center space-x-2 bg-emerald-600/95 hover:bg-emerald-500 text-white font-semibold text-xs py-2.5 px-3 rounded-xl shadow-md transition-colors"
             >
               <Download size={14} />
@@ -799,7 +818,7 @@ export default function Dashboard() {
                       <div className="mt-6">
                         {job.zip_filename ? (
                           <a 
-                            href={`http://${window.location.hostname}:8000/api/download/${job.zip_filename}`}
+                            href={`${getApiBaseUrl()}/api/download/${job.zip_filename}`}
                             className="w-full flex items-center justify-center space-x-2 bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs py-3 px-4 rounded-xl shadow transition-colors"
                           >
                             <Download size={14} />
