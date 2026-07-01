@@ -299,7 +299,7 @@ export default function Dashboard() {
               <Zap size={22} className="fill-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg tracking-wider bg-gradient-to-r from-violet-400 to-indigo-200 bg-clip-text text-transparent">ANTIGRAVITY</h1>
+              <h1 className="font-bold text-lg tracking-wider bg-gradient-to-r from-violet-400 to-indigo-200 bg-clip-text text-transparent">AURORAPORT</h1>
               <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">APK to iOS Platform</p>
             </div>
           </div>
