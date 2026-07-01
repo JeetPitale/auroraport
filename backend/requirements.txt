@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+websockets
+python-multipart
+pydantic
+pillow
+jinja2
+google-genai
+pytest
