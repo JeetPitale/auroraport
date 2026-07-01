@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { 
   Upload, FileCode, Settings, Zap, CheckCircle2, XCircle, 
   Loader2, Play, ArrowRight, Download, RefreshCw, Network, 
-  AlertTriangle, ExternalLink, Code2, Terminal, RefreshPlay, HelpCircle
+  AlertTriangle, ExternalLink, Code2, Terminal, HelpCircle
 } from "lucide-react";
 
 interface Step {
@@ -302,6 +302,18 @@ export default function Dashboard() {
               <span>Implementation Plan</span>
             </a>
           </nav>
+
+          {/* Downloads */}
+          <div className="p-4 border-t border-slate-800/80 mt-4">
+            <div className="text-[11px] text-slate-500 font-semibold px-3 py-1 uppercase tracking-widest mb-2">Deliverables</div>
+            <a 
+              href={`http://localhost:8000/api/download/${job?.zip_filename || 'fitlife_tracker_ios_migration.zip'}`}
+              className="w-full flex items-center justify-center space-x-2 bg-emerald-600/95 hover:bg-emerald-500 text-white font-semibold text-xs py-2.5 px-3 rounded-xl shadow-md transition-colors"
+            >
+              <Download size={14} />
+              <span>Download Converted iOS App</span>
+            </a>
+          </div>
         </div>
 
         {/* Profile Info */}
