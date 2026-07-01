@@ -24,6 +24,7 @@ class Step6iOSGen(BaseStep):
         # Write Package.swift
         package_swift = """// swift-tools-version: 5.9
 import PackageDescription
+import AppleProductTypes
 
 let package = Package(
     name: "iOSApp",
@@ -31,7 +32,26 @@ let package = Package(
         .iOS(.v16)
     ],
     products: [
-        .executable(name: "iOSApp", targets: ["iOSApp"])
+        .iOSApplication(
+            name: "iOSApp",
+            targets: ["iOSApp"],
+            bundleIdentifier: "com.fitlife.ios",
+            teamIdentifier: "",
+            displayVersion: "1.0",
+            bundleVersion: "1",
+            appIcon: .placeholder(paper: .template),
+            accentColor: .presetColor(.blue),
+            supportedDeviceFamilies: [
+                .pad,
+                .phone
+            ],
+            supportedInterfaceOrientations: [
+                .portrait,
+                .landscapeLeft,
+                .landscapeRight,
+                .portraitUpsideDown
+            ]
+        )
     ],
     dependencies: [],
     targets: [
